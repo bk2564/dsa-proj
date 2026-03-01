@@ -1,0 +1,9 @@
+﻿{
+  "steps": [
+    "Start with left = 0 and right = 6 for array [1, 3, 5, 7, 9, 11, 13].",
+    "Compute mid = 3. Compare arr[3] = 7 with target = 11.",
+    "Since 7 < 11, move left to mid + 1. New left = 4.",
+    "Compute mid = 5. Compare arr[5] = 11 with target = 11.",
+    "Values match. Return index 5."
+  ]
+}
