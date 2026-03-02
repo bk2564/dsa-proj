@@ -7,7 +7,6 @@ function minSubArrayLen (target, nums) {
     for (let i = 0; i < n; i++){
         prefixSum[i + 1] = prefixSum[i] + nums[i]
     }
-    console.log(prefixSum)
     for(let i = 1; i < prefixSum.length; i++){
         while(prefixSum[i] - prefixSum[deque[0]] >= target){
             minLength = Math.min(minLength, i - deque[0])

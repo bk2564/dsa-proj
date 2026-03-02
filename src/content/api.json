@@ -8,7 +8,8 @@
       "explanation": "This algorithm uses a HashMap to store the complement of each number in the array. It iterates through the array and checks if the complement of the current number exists in the map. If it does, it returns the indices of the two numbers. If it doesn't, it adds the current number to the map with its complement as the value.",
       "route" : "two-sum",
       "difficulty": "Easy",
-      "code": "function twoSum(nums, target) {\n  const map = new Map();\n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    if (map.has(complement)) {\n      return [map.get(complement), i];\n    }\n    map.set(nums[i], i);\n  }\n}"
+      "codePath": "/two-sum/two-sum-code.js",
+      "stepsPath": "/steps/two-sum.json"
     },
     {
       "id": 2,

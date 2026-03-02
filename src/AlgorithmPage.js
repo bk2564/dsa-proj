@@ -6,10 +6,12 @@ import Header from "./Header";
 import Explanation from "./Explanation";
 import Question from "./Question";
 import Code from "./Code";
+import { TwoSumExecutionSection } from "./algorithms/two-sum/two-sum";
 
 const algorithms = algorithmsData.algorithms || [];
 const algorithmComponents = {
   "binary-search": BinarySearchExecutionSection,
+  "two-sum": TwoSumExecutionSection
 };
 
 export default function AlgorithmPage() {
