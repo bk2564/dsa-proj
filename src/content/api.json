@@ -8,8 +8,7 @@
       "explanation": "This algorithm uses a HashMap to store the complement of each number in the array. It iterates through the array and checks if the complement of the current number exists in the map. If it does, it returns the indices of the two numbers. If it doesn't, it adds the current number to the map with its complement as the value.",
       "route" : "two-sum",
       "difficulty": "Easy",
-      "codePath": "/two-sum/two-sum-code.js",
-      "stepsPath": "/steps/two-sum.json"
+      "codePath": "/codes/two-sum/two-sum-code.js"
     },
     {
       "id": 2,
@@ -19,8 +18,7 @@
       "explanation": "This algorithm uses a while loop to iterate through the sorted array and check if the target is present in the middle of the array. If it is, it returns the index of the middle element. If it is not, it updates the left and right indices based on the target value. If the target is greater than the middle element, it moves the right index to the left by one. If the target is less than the middle element, it moves the left index to the right by one. This process continues until the target is found or the indices are out of bounds.",
       "route" : "binary-search",
       "difficulty": "Easy",
-      "codePath": "/binary-search/binary-search-code.js",
-      "stepsPath": "/steps/binary-search.json"
+      "codePath": "/codes/binary-search/binary-search-code.js"
     }
   ]
 }

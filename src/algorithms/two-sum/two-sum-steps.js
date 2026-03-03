@@ -5,24 +5,25 @@ export function getTwoSumSteps(nums, target) {
     const map = new Map()
     
     for (let i = 0; i < nums.length; i++) {
-        const complemento = target - nums[i]
+        const complement = target - nums[i]
         steps.push({
             array: [...nums],
             hashmap: new Map(map),
-            complemento: complemento,
+            complement: complement,
             value: nums[i],
             index: i,
-            text: `Set the complement to target ${target} - value ${nums[i]}`
+            text: `Set the complement to target ${target} - value ${nums[i]} = ${complement}`,
         })
-        if (map.has(complemento)) {
+        if (map.has(complement)) {
             steps.push({
                 array: [...nums],
                 hashmap: new Map(map),
-                complemento: complemento,
+                complement: complement,
                 value: nums[i],
                 index: i,
                 found: true,
-                text: `Complement found`
+                text: `Complement found`,
+                returnValue: `[${map.get(complement)}, ${i}]`
             })
             break
         }
@@ -30,12 +31,23 @@ export function getTwoSumSteps(nums, target) {
         steps.push({
             array: [...nums],
             hashmap: new Map(map),
-            complemento: complemento,
+            complement: complement,
             value: nums[i],
             index: i,
-            text: `Set the map key ${nums[i]} to the value ${i} (index)`
+            text: `Set the map key ${nums[i]} to the value ${i} (index)`,
         })
     }
+    if (!steps[steps.length - 1].found) {
+    steps.push({
+        array: [...nums],
+        hashmap: new Map(map),
+        complement: target - nums[nums.length - 1],
+        value: nums[nums.length - 1],
+        index: nums.length - 1,
+        text: `Target ${target} not found`,
+        returnValue: `[]`
+    })
+}
     return steps
 }
 

@@ -1,7 +1,10 @@
 import { ShowArray } from "../../components/array/array.js"
+import Input from "../../components/common/Input.js";
+import Return from "../../components/common/Return.js";
 import { StepCard } from "../../components/common/StepCard.js";
-import StepTitle from "../../components/common/StepTitle.js";
-import { HashMapExecutionSection, ShowHashMap } from "../../components/hashmap/hashmap.js"
+import StepsTitle from "../../components/common/StepsTitle.js";
+import Target from "../../components/common/Target.js";
+import { ShowHashMap } from "../../components/hashmap/hashmap.js"
 import { getTwoSumSteps } from "./two-sum-steps.js";
 
 export const twoSumDemo = {
@@ -13,10 +16,15 @@ export const twoSumDemo = {
 export function TwoSumExecutionSection() {
     const steps = getTwoSumSteps(twoSumDemo.array, twoSumDemo.target)
     const subtitle = `Array: [${twoSumDemo.array.join(", ")}], target: ${twoSumDemo.target}`;
+    const input = ` [${twoSumDemo.array.join(", ")}]`;
+    const returnValue = `${steps[steps.length - 1].returnValue}`;
     return (
         <>
-        <StepTitle subtitle={subtitle} />
+        <Input input={input} />
+        <Target target={twoSumDemo.target} />
+        <StepsTitle />
         <TwoSumSteps steps={steps} Description={Description} />
+        <Return returnValue={returnValue} />
         </>
     )
 }
@@ -30,8 +38,8 @@ function TwoSumSteps({ steps, Description }) {
                         key={index}
                         stepNumber={index + 1}
                         step={step}
-                        highlight={getHighlight(step)}
-                        Description={Description}
+                        highlightMap={getHighlightMap(step)}
+                        highlightArray={getHighlightArray(step)}
                     />
                 ))}
             </div>
@@ -39,27 +47,33 @@ function TwoSumSteps({ steps, Description }) {
     )
 }
 
-function getHighlight(step) {
+function getHighlightMap(step) {
     const highlight = new Map()
-    const index = step.hashmap.get(step.complemento)
+    const index = step.hashmap.get(step.complement)
     
     if(index >= 0 && index < step.array.length && step.found){
-        highlight.set(step.complemento, "bg-green-500")
+        highlight.set(step.complement, "bg-green-500")
     }
-
+       
     return highlight
 }
 
-function arrayHighlight(step) {
-    return new Map()
+function getHighlightArray(step) {
+    const highlight = new Map()
+    const index = step.index
+
+    if(index >= 0 && index < step.array.length){
+        highlight.set(index, "bg-yellow-500")
+    }
+    return highlight
 }
 
-function TwoSumStepCard({ stepNumber, step, highlight, Description }) {
+function TwoSumStepCard({ stepNumber, step, highlightArray, highlightMap }) {
     return (
         <div className="bg-gray-900 rounded-xl p-4 border border-slate-700 panel">
             <StepCard stepNumber={stepNumber} text={step.text} />
-            <ShowHashMap hashmap={step.hashmap} highlight={highlight} />
-            <ShowArray arr={step.array} highlight={highlight} />
+            <ShowArray arr={step.array} highlight={highlightArray} />
+            <ShowHashMap hashmap={step.hashmap} highlight={highlightMap} />
             <Description step={step} />
         </div>
     )
@@ -68,7 +82,7 @@ function TwoSumStepCard({ stepNumber, step, highlight, Description }) {
 function Description({step}) {
     return (
         <p className="mt-3 text-xs text-gray-400">
-        <code>complemento = {step.complemento} | value = {step.value} | index = {step.index}</code>
+        <code>complement = {step.complement} | value = {step.value} | index = {step.index}</code>
       </p>
     )
 }

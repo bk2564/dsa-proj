@@ -1,12 +1,12 @@
 ﻿import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import algorithmsData from "./content/api.json";
-import { BinarySearchExecutionSection } from "./algorithms/binary-search/binary-search";
 import Header from "./components/common/Header";
 import Explanation from "./components/common/Explanation";
 import Question from "./components/common/Question";
 import Code from "./components/common/Code";
 import { TwoSumExecutionSection } from "./algorithms/two-sum/TwoSum";
+import { BinarySearchExecutionSection } from "./algorithms/binary-search/BinarySearch";
 
 const algorithms = algorithmsData.algorithms || [];
 const algorithmComponents = {
