@@ -1,10 +1,4 @@
-import { ArrayExecutionSection, HashMapExecutionSection } from "../../array-execution"
-import { ShowArray } from "../../show-alg"
 
-export const twoSumDemo = {
-    array: [2, 7, 11, 15],
-    target: 18
-}
 
 export function getTwoSumSteps(nums, target) {
     const steps = []
@@ -45,26 +39,4 @@ export function getTwoSumSteps(nums, target) {
     return steps
 }
 
-export function TwoSumExecutionSection() {
-    const steps = getTwoSumSteps(twoSumDemo.array, twoSumDemo.target)
-    const subtitle = `Array: [${twoSumDemo.array.join(", ")}], target: ${twoSumDemo.target}`;
-    return (
-        <>
-        <HashMapExecutionSection 
-        title="Execution Steps"
-        subtitle={subtitle}
-        steps={steps}
-        getHighlight={(step) => {
-            const highlight = new Map()
-            const index = step.hashmap.get(step.complemento)
-            
-            if(index >= 0 && index < step.array.length && step.found){
-                highlight.set(step.complemento, "bg-green-500")
-            }
 
-            return highlight
-        }}
-        />
-        </>
-    )
-}

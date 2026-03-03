@@ -1,4 +1,4 @@
-import { ArrayExecutionSection } from "../../array-execution";
+import { ArrayExecutionSection } from "../../components/array/array.js";
 
 export const binarySearchDemo = {
   array: [1, 3, 5, 7, 9, 11, 13],
@@ -71,13 +71,21 @@ export function BinarySearchExecutionSection() {
   const subtitle = `Array: [${binarySearchDemo.array.join(", ")}], target: ${binarySearchDemo.target}`;
 
   return (
+    <>
     <ArrayExecutionSection
       title="Execution Steps"
       subtitle={subtitle}
       steps={steps}
-      getHighlight={(step) => {
-        const highlight = new Map();
+      highlight={getBinarySearchHighlight(steps)}
+      Description={Description}
+      />
+      </>
+  );
+}
 
+function getBinarySearchHighlight(steps) {
+        return steps.map((step) => {
+        const highlight = new Map();
         if (step.low >= 0 && step.low < step.array.length) {
           highlight.set(step.low, "bg-blue-500");
         }
@@ -89,7 +97,14 @@ export function BinarySearchExecutionSection() {
         }
 
         return highlight;
-      }}
-    />
-  );
-}
+})
+      }
+
+
+    function Description({step}) {
+        return (
+            <p className="mt-3 text-xs text-gray-400">
+            <code>low = {step.low} | mid = {step.mid} | high = {step.high}</code>
+          </p>
+        )
+    }

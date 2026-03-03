@@ -2,11 +2,11 @@
 import { Link, useParams } from "react-router-dom";
 import algorithmsData from "./content/api.json";
 import { BinarySearchExecutionSection } from "./algorithms/binary-search/binary-search";
-import Header from "./Header";
-import Explanation from "./Explanation";
-import Question from "./Question";
-import Code from "./Code";
-import { TwoSumExecutionSection } from "./algorithms/two-sum/two-sum";
+import Header from "./components/common/Header";
+import Explanation from "./components/common/Explanation";
+import Question from "./components/common/Question";
+import Code from "./components/common/Code";
+import { TwoSumExecutionSection } from "./algorithms/two-sum/TwoSum";
 
 const algorithms = algorithmsData.algorithms || [];
 const algorithmComponents = {

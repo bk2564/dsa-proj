@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import algorithmsData from "./content/api.json";
-import Header from "./Header";
+import Header from "./components/common/Header";
 
 const algorithms = algorithmsData.algorithms || [];
 
