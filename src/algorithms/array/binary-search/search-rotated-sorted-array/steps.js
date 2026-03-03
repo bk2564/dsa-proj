@@ -1,4 +1,4 @@
-export function getBinarySearchSteps(nums, target) {
+export function getSteps(nums, target) {
   const steps = [];
   let low = 0;
   let high = nums.length - 1;
@@ -13,7 +13,7 @@ export function getBinarySearchSteps(nums, target) {
       high,
       text: `Check mid index ${mid} (value ${nums[mid]})`,
     });
-    
+
     if (nums[mid] === target) {
       steps.push({
         array: [...nums],
@@ -22,11 +22,11 @@ export function getBinarySearchSteps(nums, target) {
         high,
         found: true,
         text: `Target ${target} found at index ${mid}`,
-        returnValue: `${mid}`
+        returnValue: `${mid}`,
       });
       return steps;
     }
-    
+
     if (nums[mid] < target) {
       steps.push({
         array: [...nums],
@@ -47,18 +47,17 @@ export function getBinarySearchSteps(nums, target) {
       high = mid - 1;
     }
   }
-  
-  if(!steps[steps.length - 1].found){
+
+  if (!steps[steps.length - 1]?.found) {
     steps.push({
       array: [...nums],
-      low : nums.length - 1,
+      low: nums.length - 1,
       mid: nums.length - 1,
       high: nums.length - 1,
       text: `Target ${target} not found`,
-      returnValue: `-1`
+      returnValue: "-1",
     });
   }
 
   return steps;
 }
-
