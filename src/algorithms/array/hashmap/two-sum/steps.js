@@ -1,6 +1,6 @@
 
 
-export function getTwoSumSteps(nums, target) {
+export function getSteps(nums, target) {
     const steps = []
     const map = new Map()
     

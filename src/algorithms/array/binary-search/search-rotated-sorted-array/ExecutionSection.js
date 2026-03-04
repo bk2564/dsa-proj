@@ -41,7 +41,7 @@ function RotatedSearchSteps({ steps }) {
 
 function RotatedSearchStepCard({ stepNumber, step }) {
   return (
-    <div className="bg-gray-900 rounded-xl p-4 border border-slate-700 panel">
+    <div className="relative bg-gray-900 rounded-xl p-4 border border-slate-700 panel">
       <StepCard stepNumber={stepNumber} text={step.text} />
       <ShowArray arr={step.array} highlight={getHighlightArray(step)} />
       <Description step={step} />

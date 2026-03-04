@@ -21,8 +21,11 @@ export function ArrayExecutionSection({ title, subtitle, steps, highlight, Descr
 function ArrayStepCard({ stepNumber, step, highlight, Description }) {
   return (
     <div className="bg-gray-900 rounded-xl p-4">
-      <p className="text-sm mb-3 text-gray-300">
+      <span className="absolute top-0 left-0 text-[10px] leading-none font-semibold text-red-400 
+      border-2 border-white-400 p-1 w-5 h-5">
         Step {stepNumber}: {step.text}
+      </span>
+      <p className="text-sm mb-3 text-gray-300">
       </p>
         <ShowArray arr={step.array} highlight={highlight} />
         <Description step={step} />
