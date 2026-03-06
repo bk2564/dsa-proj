@@ -2,14 +2,24 @@ import { ShowArray, WindowBadge } from "../../../../components/array/array";
 import { CodeBlock } from "../../../../components/common/Code";
 import Input from "../../../../components/common/Input";
 import Return from "../../../../components/common/Return";
-import { StepCard } from "../../../../components/common/StepCard";
+import StepFrame from "../../../../components/common/StepFrame";
 import StepsTitle from "../../../../components/common/StepsTitle";
+import StepTimeline from "../../../../components/common/StepTimeline";
+import { resolveStepCardContent } from "../../../../components/common/stepTitleResolver";
 import Target from "../../../../components/common/Target";
 import { getSteps } from "./steps";
 
 export const demo = {
   array: [4, 5, 6, 7, 8, 0, 1, 2],
   target: 1,
+};
+
+const STEP_TITLES = {
+  "check-mid": "Inspect midpoint",
+  "move-low": "Discard left side",
+  "move-high": "Discard right side",
+  found: "Target found",
+  "not-found": "Target not present",
 };
 
 export function ExecutionSection() {
@@ -30,17 +40,12 @@ export function ExecutionSection() {
 
 function RotatedSearchSteps({ steps }) {
   return (
-    <section>
-      <div className="space-y-5">
-        {steps.map((step, index) => (
-          <RotatedSearchStepCard
-            key={index}
-            stepNumber={index + 1}
-            step={step}
-          />
-        ))}
-      </div>
-    </section>
+    <StepTimeline
+      steps={steps}
+      renderStep={(step, stepNumber) => (
+        <RotatedSearchStepCard stepNumber={stepNumber} step={step} />
+      )}
+    />
   );
 }
 
@@ -56,19 +61,17 @@ function RotatedSearchStepCard({ stepNumber, step }) {
   const windowValues = getWindow(step);
 
   return (
-    <div className="relative bg-gray-900 rounded-xl p-4 border border-slate-700 panel">
-      <WindowBadge windowValues={windowValues} />
-      <StepCard
-        stepNumber={stepNumber}
-        title={cardContent.title}
-        description={cardContent.description}
-      />
+    <StepFrame
+      stepNumber={stepNumber}
+      title={cardContent.title}
+      description={cardContent.description}
+      badge={<WindowBadge windowValues={windowValues} />}
+    >
       <ShowArray arr={step.array} highlight={getHighlightArray(step)} />
       <Description step={step} />
-    </div>
+    </StepFrame>
   );
 }
-
 
 function Description({ step }) {
   const lowValue = step.array[step.low];
@@ -84,20 +87,14 @@ function Description({ step }) {
   );
 }
 
-
-
 function getHighlightArray(step) {
   const highlight = new Map();
 
   if (step.low >= 0 && step.low < step.array.length) {
-    highlight.set(
-      step.low,
-          "bg-blue-500"
-    );
+    highlight.set(step.low, "bg-blue-500");
   }
   if (step.high >= 0 && step.high < step.array.length) {
-    highlight.set(
-      step.high,"bg-blue-500");
+    highlight.set(step.high, "bg-blue-500");
   }
   if (step.mid >= 0 && step.mid < step.array.length) {
     highlight.set(step.mid, step.found ? "bg-green-500" : "bg-yellow-500");
@@ -107,45 +104,5 @@ function getHighlightArray(step) {
 }
 
 function getStepCardContent(step) {
-  const normalizedText = step.text.trim();
-
-  if (step.action === "check-mid") {
-    return {
-      title: "Inspect midpoint",
-      description: normalizedText,
-    };
-  }
-
-  if (step.action === "move-low") {
-    return {
-      title: "Discard left side",
-      description: normalizedText,
-    };
-  }
-
-  if (step.action === "move-high") {
-    return {
-      title: "Discard right side",
-      description: normalizedText,
-    };
-  }
-
-  if (step.action === "found") {
-    return {
-      title: "Target found",
-      description: normalizedText,
-    };
-  }
-
-  if (step.action === "not-found") {
-    return {
-      title: "Target not present",
-      description: normalizedText,
-    };
-  }
-
-  return {
-    title: normalizedText,
-    description: "",
-  };
+  return resolveStepCardContent(step, STEP_TITLES);
 }

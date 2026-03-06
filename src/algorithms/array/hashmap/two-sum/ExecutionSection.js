@@ -2,8 +2,10 @@ import { ShowArray } from "../../../../components/array/array";
 import { CodeBlock } from "../../../../components/common/Code";
 import Input from "../../../../components/common/Input";
 import Return from "../../../../components/common/Return";
-import { StepCard } from "../../../../components/common/StepCard";
+import StepFrame from "../../../../components/common/StepFrame";
 import StepsTitle from "../../../../components/common/StepsTitle";
+import StepTimeline from "../../../../components/common/StepTimeline";
+import { resolveStepCardContent } from "../../../../components/common/stepTitleResolver";
 import Target from "../../../../components/common/Target";
 import { ShowHashMap } from "../../../../components/hashmap/hashmap";
 import { getSteps } from "./steps";
@@ -11,6 +13,13 @@ import { getSteps } from "./steps";
 export const demo = {
   array: [2, 7, 11, 15],
   target: 18,
+};
+
+const STEP_TITLES = {
+  "compute-complement": "Compute complement",
+  "pair-found": "Pair located",
+  "store-value": "Store value in hash map",
+  "not-found": "No valid pair",
 };
 
 export function ExecutionSection() {
@@ -31,13 +40,10 @@ export function ExecutionSection() {
 
 function TwoSumSteps({ steps }) {
   return (
-    <section>
-      <div className="space-y-5">
-        {steps.map((step, index) => (
-            <TwoSumStepCard key={index} stepNumber={index + 1} step={step} />
-        ))}
-      </div>
-    </section>
+    <StepTimeline
+      steps={steps}
+      renderStep={(step, stepNumber) => <TwoSumStepCard stepNumber={stepNumber} step={step} />}
+    />
   );
 }
 
@@ -45,16 +51,15 @@ function TwoSumStepCard({ stepNumber, step, highlightArray, highlightMap }) {
   const cardContent = getStepCardContent(step);
 
   return (
-    <div className="relative bg-gray-900 rounded-xl p-4 border border-slate-700 panel">
-      <StepCard
-        stepNumber={stepNumber}
-        title={cardContent.title}
-        description={cardContent.description}
-      />
+    <StepFrame
+      stepNumber={stepNumber}
+      title={cardContent.title}
+      description={cardContent.description}
+    >
       <ShowArray arr={step.array} highlight={getHighlightArray(step)} />
       <ShowHashMap hashmap={step.hashmap} highlight={getHighlightMap(step)} />
       <Description step={step} />
-    </div>
+    </StepFrame>
   );
 }
 
@@ -69,7 +74,6 @@ function Description({ step }) {
     </div>
   );
 }
-
 
 function getHighlightMap(step) {
   const highlight = new Map();
@@ -93,38 +97,5 @@ function getHighlightArray(step) {
 }
 
 function getStepCardContent(step) {
-  const normalizedText = step.text.trim();
-
-  if (step.action === "compute-complement") {
-    return {
-      title: "Compute complement",
-      description: normalizedText,
-    };
-  }
-
-  if (step.action === "pair-found") {
-    return {
-      title: "Pair located",
-      description: normalizedText,
-    };
-  }
-
-  if (step.action === "store-value") {
-    return {
-      title: "Store value in hash map",
-      description: normalizedText,
-    };
-  }
-
-  if (step.action === "not-found") {
-    return {
-      title: "No valid pair",
-      description: normalizedText,
-    };
-  }
-
-  return {
-    title: normalizedText,
-    description: "",
-  };
+  return resolveStepCardContent(step, STEP_TITLES);
 }

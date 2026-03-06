@@ -1,5 +1,5 @@
 export const meta = {
-    id: 1,
+    id: 6,
     number: 148,
     route: "rotate-array",
     slug: "rotate-array",

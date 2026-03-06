@@ -2,12 +2,20 @@ import { ShowArray } from "../../../../components/array/array";
 import { CodeBlock } from "../../../../components/common/Code";
 import Input from "../../../../components/common/Input";
 import Return from "../../../../components/common/Return";
-import { StepCard } from "../../../../components/common/StepCard";
+import StepFrame from "../../../../components/common/StepFrame";
 import StepsTitle from "../../../../components/common/StepsTitle";
+import StepTimeline from "../../../../components/common/StepTimeline";
+import { resolveStepCardContent } from "../../../../components/common/stepTitleResolver";
 import { getSteps } from "./steps";
 
 export const demo = {
   prices: [7, 1, 5, 3, 6, 4],
+};
+
+const STEP_TITLES = {
+  "check-price": "Check price",
+  "update-profit": "Update profit",
+  "return-profit": "Return profit",
 };
 
 export function ExecutionSection() {
@@ -27,35 +35,35 @@ export function ExecutionSection() {
 
 function BestTimeToBuySellStockIISteps({ steps }) {
   return (
-    <section>
-      <div className="space-y-5">
-        {steps.map((step, index) => (
-          <BestTimeToBuySellStockIIStepCard
-            key={index}
-            stepNumber={index + 1}
-            step={step}
-          />
-        ))}
-      </div>
-    </section>
+    <StepTimeline
+      steps={steps}
+      renderStep={(step, stepNumber) => (
+        <BestTimeToBuySellStockIIStepCard stepNumber={stepNumber} step={step} />
+      )}
+    />
   );
 }
 
 function BestTimeToBuySellStockIIStepCard({ stepNumber, step }) {
   const cardContent = getStepCardContent(step);
+  const currentValue = step.prices?.[step.index];
+  const previousValue = step.prices?.[step.index - 1];
+  const conditionLabel =
+    currentValue === undefined || previousValue === undefined
+      ? null
+      : `${currentValue} > ${previousValue}`;
+  const isConditionTrue =
+    currentValue === undefined || previousValue === undefined ? null : currentValue > previousValue;
+
   return (
-    <div className="relative bg-gray-900 rounded-xl p-4 border border-slate-700 panel">
-      <StepCard
-        stepNumber={stepNumber}
-        title={cardContent.title}
-        description={cardContent.description}
-      />
+    <StepFrame
+      stepNumber={stepNumber}
+      title={cardContent.title}
+      description={cardContent.description}
+    >
       <ShowArray arr={step.prices} highlight={getHighlightArray(step)} />
-      <Description
-        step={step}
-        currentCondition={`${step.prices[step.index]} > ${step.prices[step.index - 1]}`}
-      />
-    </div>
+      <Description step={step} conditionLabel={conditionLabel} isConditionTrue={isConditionTrue} />
+    </StepFrame>
   );
 }
 
@@ -71,49 +79,29 @@ function getHighlightArray(step) {
   return highlight;
 }
 
-function Description({ step, currentCondition }) {
+function Description({ step, conditionLabel, isConditionTrue }) {
   const profit = step.profit;
   return (
-      <div className="mt-3 flex flex-wrap items-center gap-1 text-xs text-gray-400">
+    <div className="mt-3 flex flex-wrap items-center gap-1 text-xs text-gray-400">
       <CodeBlock code={`profit = ${profit}`} />
-      <Condition currentCondition={currentCondition} />
+      <Condition label={conditionLabel} isTrue={isConditionTrue} />
     </div>
   );
 }
 
-function Condition({ currentCondition }) {
-    if (currentCondition.includes("undefined")) return null
-    const condition = eval(currentCondition);
-    const color = condition ? "bg-green-700/90" : "bg-red-900/90";
+function Condition({ label, isTrue }) {
+  if (!label) return null;
+  const color = isTrue ? "bg-green-700/90" : "bg-red-900/90";
   return (
     <code
       className={`mx-1 inline-block rounded-md border border-slate-600/70 
             ${color} px-2 py-0.5 font-mono text-xs text-cyan-100 shadow-sm`}
     >
-      {currentCondition}
+      {label}
     </code>
   );
 }
 
 function getStepCardContent(step) {
-  const normalizedText = step.text.trim();
-
-  if (step.action === "check-price") {
-    return {
-      title: "Check price",
-      description: normalizedText,
-    };
-  }
-  if (step.action === "update-profit") {
-    return {
-      title: "Update profit",
-      description: normalizedText,
-    };
-  }
-  if (step.action === "return-profit") {
-    return {
-      title: "Return profit",
-      description: normalizedText,
-    };
-  }
+  return resolveStepCardContent(step, STEP_TITLES);
 }

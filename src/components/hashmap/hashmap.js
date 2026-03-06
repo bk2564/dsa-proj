@@ -5,7 +5,7 @@
     return (
     <div
       className={`relative w-12 h-12 flex items-center justify-center 
-        text-xl font-bold ${color} border-2 border-whiter `} 
+        text-xl font-bold ${color} border-2 border-white `} 
     >
       <span className={`absolute top-0 left-0 flex h-5 w-5 items-center justify-center 
       text-[10px] leading-none font-semibold text-red-400 

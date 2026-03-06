@@ -1,53 +1,64 @@
-import { ShowMatrix } from "../../../../components/array/array";
+import { ShowMatrix } from "../../../../components/common/MatrixView";
 import { CodeBlock } from "../../../../components/common/Code";
 import { InputMatrix } from "../../../../components/common/Input";
 import { ReturnMatrix } from "../../../../components/common/Return";
-import { StepCard } from "../../../../components/common/StepCard";
+import StepFrame from "../../../../components/common/StepFrame";
+import StepTimeline from "../../../../components/common/StepTimeline";
+import { resolveStepCardContent } from "../../../../components/common/stepTitleResolver";
 import { getSteps } from "./steps";
 
 const demo = {
-    input: [[1,2,3],[4,5,6],[7,8,9]]
-}
+  input: [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+  ],
+};
+
+const STEP_TITLES = {
+  "matrix-original": "Original matrix",
+  "swap-start": "Transpose swap start",
+  "swap-end": "Transpose swap end",
+  "transpose-end": "Transpose completed",
+  "row-inversion": "Row inversion",
+  "inversion-start": "Inversion start",
+  "inversion-end": "Inversion end",
+  "rotation-end": "Rotation end",
+};
 
 export function ExecutionSection() {
-    const steps = getSteps(demo.input)
-    return (
-        <>
-        <InputMatrix input={demo.input} />
-        <RotatedImageSteps steps={steps} />
-        <ReturnMatrix returnValue={steps[steps.length - 1].matrix} />
-        </>
-        )
+  const steps = getSteps(demo.input);
+  return (
+    <>
+      <InputMatrix input={demo.input} />
+      <RotatedImageSteps steps={steps} />
+      <ReturnMatrix returnValue={steps[steps.length - 1].matrix} />
+    </>
+  );
 }
 
 function RotatedImageSteps({ steps }) {
   return (
-    <section>
-      <div className="space-y-5">
-        {steps.map((step, index) => (
-          <RotatedImageStepCard
-            key={index}
-            stepNumber={index + 1}
-            step={step}
-          />
-        ))}
-      </div>
-    </section>
+    <StepTimeline
+      steps={steps}
+      renderStep={(step, stepNumber) => (
+        <RotatedImageStepCard stepNumber={stepNumber} step={step} />
+      )}
+    />
   );
 }
 
 function RotatedImageStepCard({ stepNumber, step }) {
   const cardContent = getStepCardContent(step);
   return (
-    <div className="relative bg-gray-900 rounded-xl p-4 border border-slate-700 panel">
-      <StepCard
-        stepNumber={stepNumber}
-        title={cardContent.title}
-        description={cardContent.description}
-      />
+    <StepFrame
+      stepNumber={stepNumber}
+      title={cardContent.title}
+      description={cardContent.description}
+    >
       <ShowMatrix matrix={step.matrix} highlight={getHighlightMatrix(step)} />
       <Description step={step} />
-    </div>
+    </StepFrame>
   );
 }
 
@@ -74,78 +85,30 @@ function getHighlightMatrix(step) {
     }
   }
 
-    if (step.action === "swap-start") {
-      highlight.set(`${step.row}-${step.column}`, "bg-amber-700");
-      highlight.set(`${step.column}-${step.row}`, "bg-amber-400");
-    }
+  if (step.action === "swap-start") {
+    highlight.set(`${step.row}-${step.column}`, "bg-amber-700");
+    highlight.set(`${step.column}-${step.row}`, "bg-amber-400");
+  }
 
-    if (step.action === "inversion-start") {
-      const oppositeColumn = step.matrix.length - 1 - step.column;
-      highlight.set(`${step.row}-${step.column}`, "bg-amber-700");
-      highlight.set(`${step.row}-${oppositeColumn}`, "bg-amber-400");
-    }
-    if (step.action === "swap-end") {
-      highlight.set(`${step.row}-${step.column}`, "bg-amber-400");
-      highlight.set(`${step.column}-${step.row}`, "bg-amber-700");
-    }
+  if (step.action === "inversion-start") {
+    const oppositeColumn = step.matrix.length - 1 - step.column;
+    highlight.set(`${step.row}-${step.column}`, "bg-amber-700");
+    highlight.set(`${step.row}-${oppositeColumn}`, "bg-amber-400");
+  }
+  if (step.action === "swap-end") {
+    highlight.set(`${step.row}-${step.column}`, "bg-amber-400");
+    highlight.set(`${step.column}-${step.row}`, "bg-amber-700");
+  }
 
-    if (step.action === "inversion-end") {
-      const oppositeColumn = step.matrix.length - 1 - step.column;
-      highlight.set(`${step.row}-${step.column}`, "bg-amber-400");
-      highlight.set(`${step.row}-${oppositeColumn}`, "bg-amber-700");
-    }
+  if (step.action === "inversion-end") {
+    const oppositeColumn = step.matrix.length - 1 - step.column;
+    highlight.set(`${step.row}-${step.column}`, "bg-amber-400");
+    highlight.set(`${step.row}-${oppositeColumn}`, "bg-amber-700");
+  }
 
   return highlight;
 }
 
 function getStepCardContent(step) {
-  const normalizedText = step.text.trim();
-
-  if (step.action === "matrix-original") {
-    return { title: "Original matrix", description: normalizedText };
-  }
-
-  if (step.action === "swap-start") {
-    return { title: "Transpose swap start", description: normalizedText };
-  }
-
-  if (step.action === "swap-end") {
-    return { title: "Transpose swap end", description: normalizedText };
-  }
-
-  if (step.action === "transpose-end") {
-    return { title: "Transpose completed", description: normalizedText };
-  }
-
-  if (step.action === "row-inversion") {
-    return {
-      title: "Row inversion",
-      description: normalizedText,
-    };
-  }
-
-  if (step.action === "inversion-start") {
-    return {
-      title: "Inversion start",
-      description: normalizedText,
-    };
-  }
-  if (step.action === "inversion-end") {
-    return {
-      title: "Inversion end",
-      description: normalizedText,
-    };
-  }
-
-  if (step.action === "rotation-end") {
-    return {
-      title: "Rotation end",
-      description: normalizedText,
-    };
-  }
-
-  return {
-    title: normalizedText,
-    description: "",
-  };
+  return resolveStepCardContent(step, STEP_TITLES);
 }

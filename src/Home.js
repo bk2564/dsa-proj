@@ -1,13 +1,10 @@
 import { Link } from "react-router-dom";
 import Header from "./components/common/Header";
 import { algorithms } from "./content/catalog";
+import { DIFFICULTY_COLOR } from "./content/difficulty";
 
 export default function Home() {
-  const difficultyColor = {
-    Easy: "border-emerald-200/70 bg-emerald-600/60 text-emerald-100",
-    Medium: "border-cyan-400/40 bg-cyan-600/20 text-cyan-200",
-    Hard: "border-red-400/40 bg-red-600/20 text-red-200",
-  };
+  const difficultyColor = DIFFICULTY_COLOR;
 
   return (
     <>
@@ -19,7 +16,7 @@ export default function Home() {
         <div className="mx-auto grid w-full max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {algorithms.map((algo) => (
             <Link
-              key={algo.id}
+              key={`${algo.route}-${algo.id}`}
               to={`/algorithm/${algo.route}/${algo.id}`}
               className="rounded-2xl border border-slate-700 bg-slate-800/80 p-6 transition duration-200 hover:-translate-y-1 hover:border-blue-400 hover:bg-slate-800"
             >
