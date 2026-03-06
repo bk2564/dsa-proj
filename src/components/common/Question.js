@@ -1,3 +1,5 @@
+import { MatrixCell } from "../array/array";
+
 export default function Question({ children, difficulty }) {
   const difficultyColor = {
     Easy: "border-emerald-200/70 bg-emerald-600/60 text-emerald-100",
@@ -25,10 +27,23 @@ export default function Question({ children, difficulty }) {
   );
 }
 
-export function QuestionCode({ code }) {
+
+
+export function QuestionMatrix({ matrix }) {
+  const columnCount = matrix?.[0]?.length || 1;
+
   return (
-    <code className="mx-1 inline-block rounded-md border border-slate-600/70 bg-slate-800/90 px-2 py-0.5 font-mono text-xs text-cyan-200 shadow-sm">
-      {code}
-    </code>
+    <div className="inline-block rounded-xl border border-slate-700/80 bg-gradient-to-br from-slate-950 to-slate-900 p-3 shadow-lg">
+      <div
+        className="grid gap-1.5"
+        style={{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }}
+      >
+        {(matrix ?? []).flatMap((row, rowIndex) =>
+          row.map((item, colIndex) => (
+            <MatrixCell key={`${rowIndex}-${colIndex}-${item}`} value={item} />
+          ))
+        )}
+      </div>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 import { ShowArray, WindowBadge } from "../../../../components/array/array";
+import { CodeBlock } from "../../../../components/common/Code";
 import Input from "../../../../components/common/Input";
-import { QuestionCode } from "../../../../components/common/Question";
 import Return from "../../../../components/common/Return";
 import { StepCard } from "../../../../components/common/StepCard";
 import StepsTitle from "../../../../components/common/StepsTitle";
@@ -8,8 +8,8 @@ import Target from "../../../../components/common/Target";
 import { getSteps } from "./steps";
 
 export const demo = {
-  array: [4, 5, 6, 7, 0, 1, 2],
-  target: 0,
+  array: [4, 5, 6, 7, 8, 0, 1, 2],
+  target: 1,
 };
 
 export function ExecutionSection() {
@@ -44,9 +44,16 @@ function RotatedSearchSteps({ steps }) {
   );
 }
 
+function getWindow(step) {
+  const start = Math.max(0, Math.min(step.low, step.array.length - 1));
+  const end = Math.max(start, Math.min(step.high, step.array.length - 1));
+
+  return step.array.slice(start, end + 1).join(", ");
+}
+
 function RotatedSearchStepCard({ stepNumber, step }) {
   const cardContent = getStepCardContent(step);
-  const windowValues = getWindow(step).join(", ");
+  const windowValues = getWindow(step);
 
   return (
     <div className="relative bg-gray-900 rounded-xl p-4 border border-slate-700 panel">
@@ -64,28 +71,20 @@ function RotatedSearchStepCard({ stepNumber, step }) {
 
 
 function Description({ step }) {
-  const windowValues = getWindow(step).join(", ");
   const lowValue = step.array[step.low];
   const midValue = step.array[step.mid];
   const highValue = step.array[step.high];
 
   return (
     <div className="mt-3 flex flex-wrap items-center gap-1 text-xs text-gray-400">
-      <QuestionCode code={`low = ${step.low} (${lowValue})`} />
-      <span>|</span>
-      <QuestionCode code={`mid = ${step.mid} (${midValue})`} />
-      <span>|</span>
-      <QuestionCode code={`high = ${step.high} (${highValue})`} />
+      <CodeBlock code={`low = ${step.low} (${lowValue})`} />
+      <CodeBlock code={`mid = ${step.mid} (${midValue})`} />
+      <CodeBlock code={`high = ${step.high} (${highValue})`} />
     </div>
   );
 }
 
-function getWindow(step) {
-  const start = Math.max(0, Math.min(step.low, step.array.length - 1));
-  const end = Math.max(start, Math.min(step.high, step.array.length - 1));
 
-  return step.array.slice(start, end + 1);
-}
 
 function getHighlightArray(step) {
   const highlight = new Map();
@@ -93,25 +92,15 @@ function getHighlightArray(step) {
   if (step.low >= 0 && step.low < step.array.length) {
     highlight.set(
       step.low,
-      step.found
-        ? "bg-green-500"
-        : step.mid == step.low
-          ? "bg-yellow-500"
-          : "bg-blue-500",
+          "bg-blue-500"
     );
-  }
-  if (step.mid >= 0 && step.mid < step.array.length) {
-    highlight.set(step.mid, step.found ? "bg-green-500" : "bg-yellow-500");
   }
   if (step.high >= 0 && step.high < step.array.length) {
     highlight.set(
-      step.high,
-      step.found
-        ? "bg-green-500"
-        : step.mid == step.high
-          ? "bg-yellow-500"
-          : "bg-blue-500",
-    );
+      step.high,"bg-blue-500");
+  }
+  if (step.mid >= 0 && step.mid < step.array.length) {
+    highlight.set(step.mid, step.found ? "bg-green-500" : "bg-yellow-500");
   }
 
   return highlight;

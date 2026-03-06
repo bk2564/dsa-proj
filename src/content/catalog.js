@@ -10,6 +10,8 @@ import {
 } from "../algorithms/array/binary-search/search-rotated-sorted-array";
 import { Lc0350ExecutionSection, lc0350Meta, Lc0350Question } from "../algorithms/array/hashmap/intersection-two-arrays-II";
 import { Lc0122ExecutionSection, lc0122Meta, Lc0122Question } from "../algorithms/array/dynamic-programming/best-time-buy-sell-stock";
+import { Lc0048ExecutionSection, lc0048Meta, Lc0048Question } from "../algorithms/array/math/rotate-image";
+import { Lc0189ExecutionSection, lc0189Meta, Lc0189Question } from "../algorithms/array/math/rotate-array";
 
 export const algorithms = [
   {
@@ -36,4 +38,16 @@ export const algorithms = [
     question: Lc0122Question,
     execution: Lc0122ExecutionSection,
   },
+  {
+    ...lc0048Meta,
+    name: lc0048Meta.title,
+    question: Lc0048Question,
+    execution: Lc0048ExecutionSection,
+  },
+  {
+    ...lc0189Meta,
+    name: lc0189Meta.title,
+    question: Lc0189Question,
+    execution: Lc0189ExecutionSection,
+  }
 ].sort((a, b) => a.number - b.number);

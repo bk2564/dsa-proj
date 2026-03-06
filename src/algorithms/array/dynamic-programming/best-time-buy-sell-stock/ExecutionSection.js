@@ -1,6 +1,6 @@
 import { ShowArray } from "../../../../components/array/array";
+import { CodeBlock } from "../../../../components/common/Code";
 import Input from "../../../../components/common/Input";
-import { QuestionCode } from "../../../../components/common/Question";
 import Return from "../../../../components/common/Return";
 import { StepCard } from "../../../../components/common/StepCard";
 import StepsTitle from "../../../../components/common/StepsTitle";
@@ -75,7 +75,7 @@ function Description({ step, currentCondition }) {
   const profit = step.profit;
   return (
       <div className="mt-3 flex flex-wrap items-center gap-1 text-xs text-gray-400">
-      <QuestionCode code={`profit = ${profit}`} />
+      <CodeBlock code={`profit = ${profit}`} />
       <Condition currentCondition={currentCondition} />
     </div>
   );

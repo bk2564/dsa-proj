@@ -1,6 +1,6 @@
 import { ShowArray } from "../../../../components/array/array";
+import { CodeBlock } from "../../../../components/common/Code";
 import Input from "../../../../components/common/Input";
-import { QuestionCode } from "../../../../components/common/Question";
 import Return from "../../../../components/common/Return";
 import { StepCard } from "../../../../components/common/StepCard";
 import StepsTitle from "../../../../components/common/StepsTitle";
@@ -63,19 +63,9 @@ function Description({ step }) {
 
   return (
     <div className="mt-3 flex flex-wrap items-center gap-1 text-xs text-gray-400">
-      <QuestionCode code={`i = ${step.index}`} />
-      <span>|</span>
-      <QuestionCode code={`value = ${step.value}`} />
-      <span>|</span>
-      <QuestionCode code={`complement = ${step.complement}`} />
-      <span>|</span>
-      <QuestionCode code={`mapSize = ${step.hashmap.size}`} />
-      {step.found && (
-        <>
-          <span>|</span>
-          <QuestionCode code={`complementIndex = ${foundIndex}`} />
-        </>
-      )}
+      <CodeBlock code={`i = ${step.index}`} />
+      <CodeBlock code={`value = ${step.value}`} />
+      <CodeBlock code={`complement = ${step.complement}`} />
     </div>
   );
 }

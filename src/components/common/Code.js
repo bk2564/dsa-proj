@@ -24,3 +24,12 @@ export default function Code({ text }) {
     </aside>
   );
 }
+
+export function CodeBlock({ code }) {
+  return (
+    <code className="mx-1 inline-block rounded-md border border-slate-600/70 bg-slate-800/90 px-2 py-0.5 font-mono text-xs text-cyan-200 shadow-sm">
+      {code}
+    </code>
+  );
+}
+

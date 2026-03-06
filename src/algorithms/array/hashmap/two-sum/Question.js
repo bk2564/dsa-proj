@@ -1,12 +1,12 @@
-import { QuestionCode } from "../../../../components/common/Question";
+import { CodeBlock } from "../../../../components/common/Code";
 
 export function Question() {
   return (
     <>
       <p>
-        Given an integer array <QuestionCode code="nums" /> and an integer
-        <QuestionCode code="target" />, return the indices of the two numbers
-        whose sum equals <QuestionCode code="target" />.
+        Given an integer array <CodeBlock code="nums" /> and an integer
+        <CodeBlock code="target" />, return the indices of the two numbers
+        whose sum equals <CodeBlock code="target" />.
       </p>
       <div className="rounded-xl border border-slate-700 bg-slate-900/70 p-4">
         <p className="mb-2 text-xs font-semibold uppercase tracking-[0.12em] text-slate-400">
@@ -23,8 +23,8 @@ export function Question() {
           Example
         </p>
         <p>
-          <QuestionCode code="nums = [2,7,11,15]" />,<QuestionCode code="target = 9" />
-          returns <QuestionCode code="[0, 1]" />.
+          <CodeBlock code="nums = [2,7,11,15]" />,<CodeBlock code="target = 9" />
+          returns <CodeBlock code="[0, 1]" />.
         </p>
       </div>
     </>
