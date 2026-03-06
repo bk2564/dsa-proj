@@ -24,7 +24,7 @@ export function Question() {
         </p>
         <p>
           <QuestionCode code="nums = [2,7,11,15]" />,<QuestionCode code="target = 9" />
-          returns <QuestionCode code="[0,1]" />.
+          returns <QuestionCode code="[0, 1]" />.
         </p>
       </div>
     </>

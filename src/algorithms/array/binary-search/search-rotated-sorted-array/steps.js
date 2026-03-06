@@ -7,54 +7,87 @@ export function getSteps(nums, target) {
     const mid = Math.floor((low + high) / 2);
 
     steps.push({
+      action: "check-mid",
       array: [...nums],
       low,
       mid,
       high,
-      text: `Check mid index ${mid} (value ${nums[mid]})`,
+      text: `Checking mid [${mid}] => (${nums[mid]}) against target (${target}).`,
     });
 
     if (nums[mid] === target) {
       steps.push({
+        action: "found",
         array: [...nums],
         low,
         mid,
         high,
         found: true,
-        text: `Target ${target} found at index ${mid}`,
+        text: `nums[mid] => (${nums[mid]}) equals target (${target}). Returning index [${mid}].`,
         returnValue: `${mid}`,
       });
       return steps;
     }
 
-    if (nums[mid] < target) {
-      steps.push({
-        array: [...nums],
-        low,
-        mid,
-        high,
-        text: `${nums[mid]} < ${target}, move low to ${mid + 1 < nums.length ? mid + 1 : mid}`,
-      });
-      low = mid + 1;
+    if (nums[low] <= nums[mid]) {
+      if (nums[low] <= target && target < nums[mid]) {
+        steps.push({
+          action: "move-high",
+          array: [...nums],
+          low,
+          mid,
+          high,
+          text: `low [${low}] <= mid [${mid}] | ${nums[low]} <= ${nums[mid]}. So, (${low}..${mid}) is sorted [${nums.slice(low, mid + 1).join(",")}], and target [${target}] is in it. Updating high to ${mid - 1}.`,
+        });
+        high = mid - 1;
+      } else {
+        steps.push({
+          action: "move-low",
+          array: [...nums],
+          low,
+          mid,
+          high,
+          text: `low [${low}] <= mid [${mid}] | ${nums[low]} <= ${nums[mid]}. So, (${low}..${mid}) is sorted [${nums.slice(low, mid + 1).join(",")}], but target [${target}] is not in it. Updating low to ${mid + 1}.`,
+        });
+        low = mid + 1;
+      }
     } else {
-      steps.push({
-        array: [...nums],
-        low,
-        mid,
-        high,
-        text: `${nums[mid]} > ${target}, move high to ${mid - 1 < nums.length ? mid - 1 : mid}`,
-      });
-      high = mid - 1;
+      if (nums[mid] < target && target <= nums[high]) {
+        steps.push({
+          action: "move-low",
+          array: [...nums],
+          low,
+          mid,
+          high,
+          text: `low (${low}) > mid (${mid}) | [${nums[low]}] > [${nums[mid]}]. So, (${mid}..${high}) is sorted [${nums.slice(mid, high + 1).join(",")}], and target [${target}] is in it. Updating low to ${mid + 1}.`,
+        });
+        low = mid + 1;
+      } else {
+        steps.push({
+          action: "move-high",
+          array: [...nums],
+          low,
+          mid,
+          high,
+          text: `low (${low}) > mid (${mid}) | [${nums[low]}] > [${nums[mid]}]. So, (${mid}..${high}) is sorted [${nums.slice(mid, high + 1).join(",")}], but target [${target}] is not in it. Updating high to ${mid - 1}.`,
+        });
+        high = mid - 1;
+      }
     }
   }
 
   if (!steps[steps.length - 1]?.found) {
+    const clampedLow = Math.max(0, Math.min(low, nums.length - 1));
+    const clampedHigh = Math.max(0, Math.min(high, nums.length - 1));
+    const clampedMid = Math.floor((clampedLow + clampedHigh) / 2);
+
     steps.push({
+      action: "not-found",
       array: [...nums],
-      low: nums.length - 1,
-      mid: nums.length - 1,
-      high: nums.length - 1,
-      text: `Target ${target} not found`,
+      low: clampedLow,
+      mid: clampedMid,
+      high: clampedHigh,
+      text: `Stop: low (${low}) > high (${high}). Target [${target}] was not found.`,
       returnValue: "-1",
     });
   }

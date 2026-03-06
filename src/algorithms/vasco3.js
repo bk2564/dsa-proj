@@ -9,4 +9,5 @@ function countDistinctIntegers(nums) {
     return set.size
 };
 
+
 console.log(countDistinctIntegers([1,13,13,10,12,31]))

@@ -1,39 +1,3 @@
-export function ArrayExecutionSection({ title, subtitle, steps, highlight, Description }) {
-  return (
-    <section>
-      <h2 className="text-xl font-semibold mb-3">{title}</h2>
-      <code className="text-sm text-gray-400 mb-4">{subtitle}</code>
-      <div className="space-y-5">
-        {steps.map((step, index) => (
-          <ArrayStepCard
-            key={index}
-            stepNumber={index + 1}
-            step={step}
-            highlight={highlight[index]}
-            Description={Description}
-          />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function ArrayStepCard({ stepNumber, step, highlight, Description }) {
-  return (
-    <div className="bg-gray-900 rounded-xl p-4">
-      <span className="absolute top-0 left-0 text-[10px] leading-none font-semibold text-red-400 
-      border-2 border-white-400 p-1 w-5 h-5">
-        Step {stepNumber}: {step.text}
-      </span>
-      <p className="text-sm mb-3 text-gray-300">
-      </p>
-        <ShowArray arr={step.array} highlight={highlight} />
-        <Description step={step} />
-    </div>
-  );
-}
-
-
 export function ShowArray({arr, highlight}) {
   return (
     <div className="flex flex-wrap gap-4 my-4">
@@ -54,5 +18,13 @@ function Square({ value, color }) {
     >
       {value}
     </div>
+  );
+}
+
+export function WindowBadge({ windowValues }) {
+  return (
+    <span className="absolute top-0 right-0 max-w-[60%] rounded-xl border-2 border-slate-700 bg-gray-900 px-3 py-1 text-right text-[12px] font-semibold leading-tight text-slate-200">
+      Window [{windowValues}]
+    </span>
   );
 }

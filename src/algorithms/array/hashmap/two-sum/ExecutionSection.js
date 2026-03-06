@@ -1,15 +1,16 @@
-import { ShowArray, WindowBadge } from "../../../../components/array/array";
+import { ShowArray } from "../../../../components/array/array";
 import Input from "../../../../components/common/Input";
 import { QuestionCode } from "../../../../components/common/Question";
 import Return from "../../../../components/common/Return";
 import { StepCard } from "../../../../components/common/StepCard";
 import StepsTitle from "../../../../components/common/StepsTitle";
 import Target from "../../../../components/common/Target";
+import { ShowHashMap } from "../../../../components/hashmap/hashmap";
 import { getSteps } from "./steps";
 
 export const demo = {
-  array: [4, 5, 6, 7, 0, 1, 2],
-  target: 0,
+  array: [2, 7, 11, 15],
+  target: 18,
 };
 
 export function ExecutionSection() {
@@ -22,135 +23,112 @@ export function ExecutionSection() {
       <Input input={input} />
       <Target target={demo.target} />
       <StepsTitle />
-      <RotatedSearchSteps steps={steps} />
+      <TwoSumSteps steps={steps} />
       <Return returnValue={returnValue} />
     </>
   );
 }
 
-function RotatedSearchSteps({ steps }) {
+function TwoSumSteps({ steps }) {
   return (
     <section>
       <div className="space-y-5">
         {steps.map((step, index) => (
-          <RotatedSearchStepCard
-            key={index}
-            stepNumber={index + 1}
-            step={step}
-          />
+            <TwoSumStepCard key={index} stepNumber={index + 1} step={step} />
         ))}
       </div>
     </section>
   );
 }
 
-function RotatedSearchStepCard({ stepNumber, step }) {
+function TwoSumStepCard({ stepNumber, step, highlightArray, highlightMap }) {
   const cardContent = getStepCardContent(step);
-  const windowValues = getWindow(step).join(", ");
 
   return (
     <div className="relative bg-gray-900 rounded-xl p-4 border border-slate-700 panel">
-      <WindowBadge windowValues={windowValues} />
       <StepCard
         stepNumber={stepNumber}
         title={cardContent.title}
         description={cardContent.description}
       />
       <ShowArray arr={step.array} highlight={getHighlightArray(step)} />
+      <ShowHashMap hashmap={step.hashmap} highlight={getHighlightMap(step)} />
       <Description step={step} />
     </div>
   );
 }
 
-
 function Description({ step }) {
-  const windowValues = getWindow(step).join(", ");
-  const lowValue = step.array[step.low];
-  const midValue = step.array[step.mid];
-  const highValue = step.array[step.high];
+  const foundIndex = step.hashmap.get(step.complement);
 
   return (
     <div className="mt-3 flex flex-wrap items-center gap-1 text-xs text-gray-400">
-      <QuestionCode code={`low = ${step.low} (${lowValue})`} />
+      <QuestionCode code={`i = ${step.index}`} />
       <span>|</span>
-      <QuestionCode code={`mid = ${step.mid} (${midValue})`} />
+      <QuestionCode code={`value = ${step.value}`} />
       <span>|</span>
-      <QuestionCode code={`high = ${step.high} (${highValue})`} />
+      <QuestionCode code={`complement = ${step.complement}`} />
+      <span>|</span>
+      <QuestionCode code={`mapSize = ${step.hashmap.size}`} />
+      {step.found && (
+        <>
+          <span>|</span>
+          <QuestionCode code={`complementIndex = ${foundIndex}`} />
+        </>
+      )}
     </div>
   );
 }
 
-function getWindow(step) {
-  const start = Math.max(0, Math.min(step.low, step.array.length - 1));
-  const end = Math.max(start, Math.min(step.high, step.array.length - 1));
 
-  return step.array.slice(start, end + 1);
+function getHighlightMap(step) {
+  const highlight = new Map();
+  const index = step.hashmap.get(step.complement);
+
+  if (index >= 0 && index < step.array.length && step.found) {
+    highlight.set(step.complement, "bg-green-500");
+  }
+
+  return highlight;
 }
 
 function getHighlightArray(step) {
   const highlight = new Map();
+  const index = step.index;
 
-  if (step.low >= 0 && step.low < step.array.length) {
-    highlight.set(
-      step.low,
-      step.found
-        ? "bg-green-500"
-        : step.mid == step.low
-          ? "bg-yellow-500"
-          : "bg-blue-500",
-    );
+  if (index >= 0 && index < step.array.length) {
+    highlight.set(index, "bg-yellow-500");
   }
-  if (step.mid >= 0 && step.mid < step.array.length) {
-    highlight.set(step.mid, step.found ? "bg-green-500" : "bg-yellow-500");
-  }
-  if (step.high >= 0 && step.high < step.array.length) {
-    highlight.set(
-      step.high,
-      step.found
-        ? "bg-green-500"
-        : step.mid == step.high
-          ? "bg-yellow-500"
-          : "bg-blue-500",
-    );
-  }
-
   return highlight;
 }
 
 function getStepCardContent(step) {
   const normalizedText = step.text.trim();
 
-  if (step.action === "check-mid") {
+  if (step.action === "compute-complement") {
     return {
-      title: "Inspect midpoint",
+      title: "Compute complement",
       description: normalizedText,
     };
   }
 
-  if (step.action === "move-low") {
+  if (step.action === "pair-found") {
     return {
-      title: "Discard left side",
+      title: "Pair located",
       description: normalizedText,
     };
   }
 
-  if (step.action === "move-high") {
+  if (step.action === "store-value") {
     return {
-      title: "Discard right side",
-      description: normalizedText,
-    };
-  }
-
-  if (step.action === "found") {
-    return {
-      title: "Target found",
+      title: "Store value in hash map",
       description: normalizedText,
     };
   }
 
   if (step.action === "not-found") {
     return {
-      title: "Target not present",
+      title: "No valid pair",
       description: normalizedText,
     };
   }

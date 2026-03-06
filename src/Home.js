@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
-import algorithmsData from "./content/api.json";
 import Header from "./components/common/Header";
-
-const algorithms = algorithmsData.algorithms || [];
+import { algorithms } from "./content/catalog";
 
 export default function Home() {
+  const difficultyColor = {
+    Easy: "border-emerald-200/70 bg-emerald-600/60 text-emerald-100",
+    Medium: "border-cyan-400/40 bg-cyan-600/20 text-cyan-200",
+    Hard: "border-red-400/40 bg-red-600/20 text-red-200",
+  };
+
   return (
     <>
       <Header
@@ -19,7 +23,16 @@ export default function Home() {
               to={`/algorithm/${algo.route}/${algo.id}`}
               className="rounded-2xl border border-slate-700 bg-slate-800/80 p-6 transition duration-200 hover:-translate-y-1 hover:border-blue-400 hover:bg-slate-800"
             >
-              <h2 className="mb-2 text-xl font-semibold">{algo.number + ". " + algo.name}</h2>
+              <div className="mb-2 flex items-start justify-between gap-3">
+                <h2 className="text-xl font-semibold">{algo.number + ". " + algo.name}</h2>
+                <span
+                  className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold tracking-wide ${
+                    difficultyColor[algo.difficulty] || "border-slate-500/40 bg-slate-700/40 text-slate-100"
+                  }`}
+                >
+                  {algo.difficulty?.toUpperCase() || "UNKNOWN"}
+                </span>
+              </div>
               <p className="text-sm text-slate-300">{algo.category}</p>
             </Link>
           ))}
