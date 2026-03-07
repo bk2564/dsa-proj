@@ -8,10 +8,32 @@ import {
   Lc0033Question,
   lc0033Meta,
 } from "../algorithms/array/binary-search/search-rotated-sorted-array";
-import { Lc0350ExecutionSection, lc0350Meta, Lc0350Question } from "../algorithms/array/hashmap/intersection-two-arrays-II";
-import { Lc0122ExecutionSection, lc0122Meta, Lc0122Question } from "../algorithms/array/dynamic-programming/best-time-buy-sell-stock";
-import { Lc0048ExecutionSection, lc0048Meta, Lc0048Question } from "../algorithms/array/math/rotate-image";
-import { Lc0189ExecutionSection, lc0189Meta, Lc0189Question } from "../algorithms/array/math/rotate-array";
+import {
+  Lc0350ExecutionSection,
+  lc0350Meta,
+  Lc0350Question,
+} from "../algorithms/array/hashmap/intersection-two-arrays-II";
+import {
+  Lc0122ExecutionSection,
+  lc0122Meta,
+  Lc0122Question,
+} from "../algorithms/array/dynamic-programming/best-time-buy-sell-stock";
+import {
+  Lc0048ExecutionSection,
+  lc0048Meta,
+  Lc0048Question,
+} from "../algorithms/array/math/rotate-image";
+import {
+  Lc0189ExecutionSection,
+  lc0189Meta,
+  Lc0189Question,
+} from "../algorithms/array/math/rotate-array";
+import {
+  lc0066ExecutionSection,
+  lc0066Meta,
+  lc0066Question,
+} from "../algorithms/array/math/plus-one";
+import { Lc0136ExecutionSection, lc0136Meta, Lc0136Question } from "../algorithms/array/bit-manipulation/single-number";
 
 export const algorithms = [
   {
@@ -49,5 +71,17 @@ export const algorithms = [
     name: lc0189Meta.title,
     question: Lc0189Question,
     execution: Lc0189ExecutionSection,
+  },
+  {
+    ...lc0066Meta,
+    name: lc0066Meta.title,
+    question: lc0066Question,
+    execution: lc0066ExecutionSection,
+  },
+  {
+    ...lc0136Meta,
+    name: lc0136Meta.title,
+    question: Lc0136Question,
+    execution: Lc0136ExecutionSection,
   }
 ].sort((a, b) => a.number - b.number);

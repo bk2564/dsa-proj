@@ -25,7 +25,7 @@ const STEP_TITLES = {
 
 export function ExecutionSection() {
   const steps = getSteps([...demo.nums], demo.k);
-  const input = ` [${demo.nums.join(", ")}]`;
+  const input = `[${demo.nums.join(", ")}]`;
   const returnValue = `[${steps[steps.length - 1].nums.join(", ")}]`;
 
   return (

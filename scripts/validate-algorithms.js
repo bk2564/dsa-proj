@@ -5,7 +5,7 @@ const projectRoot = path.resolve(__dirname, "..");
 const algorithmsRoot = path.join(projectRoot, "src", "algorithms", "array");
 const publicRoot = path.join(projectRoot, "public");
 const requiredFiles = ["ExecutionSection.js", "Question.js", "index.js", "meta.js", "steps.js"];
-const excludedFolders = new Set(["plus-one"]);
+const excludedFolders = new Set([]);
 
 function getAlgorithmDirs() {
   const categories = fs
