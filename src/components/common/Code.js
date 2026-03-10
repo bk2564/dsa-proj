@@ -25,9 +25,9 @@ export default function Code({ text }) {
   );
 }
 
-export function CodeBlock({ code }) {
+export function CodeBlock({ code, color="bg-slate-800/90" }) {
   return (
-    <code className="mx-1 inline-block rounded-md border border-slate-600/70 bg-slate-800/90 px-2 py-0.5 font-mono text-xs text-cyan-200 shadow-sm">
+    <code className={`mx-1 inline-block rounded-md border border-slate-600/70 ${color} px-2 py-0.5 font-mono text-xs text-cyan-200 shadow-sm`}>
       {code}
     </code>
   );

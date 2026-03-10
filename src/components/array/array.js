@@ -13,12 +13,17 @@ export function ShowArray({arr, highlight}) {
 
 
 function Square({ value, color }) {
+  const text = String(value);
+  const len = text.length;
+  const fontSizePx = Math.max(10, 22 - (len - 1) * 2.1);
+
   return (
     <div
-      className={`w-8 h-8 flex items-center justify-center 
-        text-xl font-bold ${color} border-2 border-white`}
+      className={`w-11 h-10 flex items-center justify-center overflow-hidden
+        font-bold leading-none ${color} border-2 border-white`}
+      style={{ fontSize: `${fontSizePx}px` }}
     >
-      {value}
+      <span className="block w-full text-center truncate">{text}</span>
     </div>
   );
 }

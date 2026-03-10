@@ -33,7 +33,17 @@ import {
   lc0066Meta,
   lc0066Question,
 } from "../algorithms/array/math/plus-one";
-import { Lc0136ExecutionSection, lc0136Meta, Lc0136Question } from "../algorithms/array/bit-manipulation/single-number";
+import {
+  Lc0136ExecutionSection,
+  lc0136Meta,
+  Lc0136Question,
+} from "../algorithms/array/bit-manipulation/single-number";
+import {
+  Lc0217ExecutionSection,
+  lc0217Meta,
+  Lc0217Question,
+} from "../algorithms/array/hashmap/contains-duplicate";
+import { Lc0026ExecutionSection, lc0026Meta, Lc0026Question } from "../algorithms/array/two-pointers/remove-duplicates-sorted-array";
 
 export const algorithms = [
   {
@@ -83,5 +93,17 @@ export const algorithms = [
     name: lc0136Meta.title,
     question: Lc0136Question,
     execution: Lc0136ExecutionSection,
+  },
+  {
+    ...lc0217Meta,
+    name: lc0217Meta.title,
+    question: Lc0217Question,
+    execution: Lc0217ExecutionSection,
+  },
+  {
+    ...lc0026Meta,
+    name: lc0026Meta.title,
+    question: Lc0026Question,
+    execution: Lc0026ExecutionSection,
   }
 ].sort((a, b) => a.number - b.number);

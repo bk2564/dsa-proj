@@ -9,4 +9,5 @@ function reverse(x) {
     if(negative) return reversed * - 1
     return reversed
 };
+
 console.log(reverse(-120))

@@ -1,3 +1,4 @@
+
 export const meta = {
   id: 9,
   number: 217,
@@ -7,9 +8,10 @@ export const meta = {
   category: "Array / HashMap",
   difficulty: "Easy",
   explanation:
-    "This algorithm uses a HashMap to store seen values and their indices. "+
-    "For each value, it computes the complement (target - value) and checks whether "+
-    "that complement is already in the map. "+
-    "If yes, it returns both indices; otherwise it stores the current value and continues.",
+    "This algorithm uses a Set to store seen values. "+
+    "For each value, it checks if it is already in the set "+
+    "If yes, it returns false. If not, it stores the current number in the Set. "+
+    "At the end, it returns true if all values were unique.",
   codePath: "/codes/array/hashmap/contains-duplicate/contains-duplicate.js",
 };
+
