@@ -64,8 +64,6 @@ function TwoSumStepCard({ stepNumber, step, highlightArray, highlightMap }) {
 }
 
 function Description({ step }) {
-  const foundIndex = step.hashmap.get(step.complement);
-
   return (
     <div className="mt-3 flex flex-wrap items-center gap-1 text-xs text-gray-400">
       <CodeBlock code={`i = ${step.index}`} />

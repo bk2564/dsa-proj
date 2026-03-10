@@ -123,7 +123,7 @@ export function getSteps(digits) {
       text: `Putting the result digit at the start of the result array`,
     });
   }
-  if (carry == 1) {
+  if (carry === 1) {
     result.unshift(1);
     steps.push({
       action: "result-last-digit-carry",

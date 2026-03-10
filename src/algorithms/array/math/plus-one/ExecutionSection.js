@@ -20,8 +20,6 @@ const STEP_TITLES = {
   "result-first-digit": "Result first digit",
   "digits-addition": "Digits addition",
   "digit-addition": "Digit addition",
-  "carry-set": "Carry set",
-  "digit-set": "Digit set",
   "result-ready": "Result ready",
 };
 

@@ -70,7 +70,6 @@ function BestTimeToBuySellStockIIStepCard({ stepNumber, step }) {
 function getHighlightArray(step) {
   const highlight = new Map();
   const index = step.index;
-  const length = step.prices.length;
 
   if (index >= 0 && index < step.prices.length) {
     highlight.set(index, "bg-yellow-500");
