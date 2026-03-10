@@ -1,0 +1,6 @@
+{
+  "buildCommand": "npm --prefix dsa-proj run build",
+  "outputDirectory": "dsa-proj/build",
+  "installCommand": "npm --prefix dsa-proj install",
+  "devCommand": "npm --prefix dsa-proj start"
+}
