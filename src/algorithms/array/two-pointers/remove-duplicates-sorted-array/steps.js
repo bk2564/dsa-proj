@@ -1,6 +1,6 @@
 export function getSteps(nums) {
     const steps = [];
-    if (nums.length == 0) {
+    if (nums.length === 0) {
       steps.push({
         action: "0-length-array",
         returnValue: 0,
