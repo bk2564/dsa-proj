@@ -44,6 +44,7 @@ import {
   Lc0217Question,
 } from "../algorithms/array/hashmap/contains-duplicate";
 import { Lc0026ExecutionSection, lc0026Meta, Lc0026Question } from "../algorithms/array/two-pointers/remove-duplicates-sorted-array";
+import { lc0209ExecutionSection, lc0209Meta, lc0209Question } from "../algorithms/array/binary-search/minimum-size-subarray-sum";
 
 export const algorithms = [
   {
@@ -105,5 +106,11 @@ export const algorithms = [
     name: lc0026Meta.title,
     question: Lc0026Question,
     execution: Lc0026ExecutionSection,
+  },
+  {
+    ...lc0209Meta,
+    name: lc0209Meta.title,
+    question: lc0209Question,
+    execution: lc0209ExecutionSection,
   }
 ].sort((a, b) => a.number - b.number);
