@@ -1,7 +1,7 @@
 
   function SquareMap({ mapKey, value, color }) {
     const squareColor = color === "bg-green-500" ? "bg-blue-700/70" : "";
-  
+
     return (
     <div
       className={`relative w-12 h-12 flex items-center justify-center 

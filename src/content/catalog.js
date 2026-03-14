@@ -45,6 +45,9 @@ import {
 } from "../algorithms/array/hashmap/contains-duplicate";
 import { Lc0026ExecutionSection, lc0026Meta, Lc0026Question } from "../algorithms/array/two-pointers/remove-duplicates-sorted-array";
 import { lc0209ExecutionSection, lc0209Meta, lc0209Question } from "../algorithms/array/binary-search/minimum-size-subarray-sum";
+import { lc0643ExecutionSection, lc0643Meta, lc0643Question } from "../algorithms/array/sliding-window/maximum-average-subarray-I";
+import { lc0003ExecutionSection, lc0003Meta, lc0003Question } from "../algorithms/string/hashmap/longest-substring-without-repeating-characters";
+import { lc1470ExecutionSection, lc1470Meta, lc1470Question } from "../algorithms/array/shuffle-array";
 
 export const algorithms = [
   {
@@ -112,5 +115,23 @@ export const algorithms = [
     name: lc0209Meta.title,
     question: lc0209Question,
     execution: lc0209ExecutionSection,
+  },
+  {
+    ...lc0643Meta,
+    name: lc0643Meta.title,
+    question: lc0643Question,
+    execution: lc0643ExecutionSection,
+  },
+  {
+    ...lc0003Meta,
+    name: lc0003Meta.title,
+    question: lc0003Question,
+    execution: lc0003ExecutionSection,
+  },
+  {
+    ...lc1470Meta,
+    name: lc1470Meta.title,
+    question: lc1470Question,
+    execution: lc1470ExecutionSection,
   }
 ].sort((a, b) => a.number - b.number);

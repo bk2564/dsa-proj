@@ -26,7 +26,6 @@ export function ExecutionSection({ nums }) {
     const steps = getSteps([...demo.nums]);
     const input = `[${demo.nums.join(", ")}]`;
     const returnValue = steps[steps.length - 1].returnValue;
-    console.log(steps)
     return (
         <>
         <Input input={input} />
